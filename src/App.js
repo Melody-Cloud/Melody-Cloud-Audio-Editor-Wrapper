@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import $ from 'jquery';
 
@@ -37,27 +36,27 @@ class App extends Component {
 
 
         /*
- * This script is provided to give an example how the playlist can be controlled using the event emitter.
- * This enables projects to create/control the useability of the project.
-*/
-        var ee = playlist.getEventEmitter();
-        var $container = $("body");
-        var $timeFormat = $container.find('.time-format');
-        var $audioStart = $container.find('.audio-start');
-        var $audioEnd = $container.find('.audio-end');
-        var $time = $container.find('.audio-pos');
+         * This script is provided to give an example how the playlist can be controlled using the event emitter.
+         * This enables projects to create/control the useability of the project.
+        */
+        let ee = playlist.getEventEmitter();
+        let $container = $("body");
+        let $timeFormat = $container.find('.time-format');
+        let $audioStart = $container.find('.audio-start');
+        let $audioEnd = $container.find('.audio-end');
+        let $time = $container.find('.audio-pos');
 
-        var format = "hh:mm:ss.uuu";
-        var startTime = 0;
-        var endTime = 0;
-        var audioPos = 0;
-        var downloadUrl = undefined;
-        var isLooping = false;
-        var playoutPromises;
+        let format = "hh:mm:ss.uuu";
+        let startTime = 0;
+        let endTime = 0;
+        let audioPos = 0;
+        let downloadUrl = undefined;
+        let isLooping = false;
+        let playoutPromises;
 
         function toggleActive(node) {
-            var active = node.parentNode.querySelectorAll('.active');
-            var i = 0, len = active.length;
+            let active = node.parentNode.querySelectorAll('.active');
+            let i = 0, len = active.length;
 
             for (; i < len; i++) {
                 active[i].classList.remove('active');
@@ -69,7 +68,7 @@ class App extends Component {
         function cueFormatters(format) {
 
             function clockFormat(seconds, decimals) {
-                var hours,
+                let hours,
                     minutes,
                     secs,
                     result;
@@ -84,7 +83,7 @@ class App extends Component {
                 return result;
             }
 
-            var formats = {
+            let formats = {
                 "seconds": function (seconds) {
                     return seconds.toFixed(0);
                 },
@@ -134,24 +133,6 @@ class App extends Component {
         updateSelect(startTime, endTime);
         updateTime(audioPos);
 
-
-        /*
-        * Code below sets up events to send messages to the playlist.
-        */
-// $container.on("click", ".btn-playlist-state-group", function() {
-//   //reset these for now.
-//   $('.btn-fade-state-group').addClass('hidden');
-//   $('.btn-select-state-group').addClass('hidden');
-
-//   if ($('.btn-select').hasClass('active')) {
-//     $('.btn-select-state-group').removeClass('hidden');
-//   }
-
-//   if ($('.btn-fadein').hasClass('active') || $('.btn-fadeout').hasClass('active')) {
-//     $('.btn-fade-state-group').removeClass('hidden');
-//   }
-// });
-
         $container.on("click", ".btn-annotations-download", function () {
             ee.emit("annotationsrequest");
         });
@@ -194,7 +175,7 @@ class App extends Component {
             ee.emit("record");
         });
 
-//track interaction states
+        //track interaction states
         $container.on("click", ".btn-cursor", function () {
             ee.emit("statechange", "cursor");
             toggleActive(this);
@@ -220,7 +201,7 @@ class App extends Component {
             toggleActive(this);
         });
 
-//fade types
+        //fade types
         $container.on("click", ".btn-logarithmic", function () {
             ee.emit("fadetype", "logarithmic");
             toggleActive(this);
@@ -241,7 +222,7 @@ class App extends Component {
             toggleActive(this);
         });
 
-//zoom buttons
+        //zoom buttons
         $container.on("click", ".btn-zoom-in", function () {
             ee.emit("zoomin");
         });
@@ -263,7 +244,7 @@ class App extends Component {
         });
 
         $container.on("click", ".btn-seektotime", function () {
-            var time = parseInt(document.getElementById("seektime").value, 10);
+            let time = parseInt(document.getElementById("seektime").value, 10);
             ee.emit("select", time, time);
         });
 
@@ -271,7 +252,7 @@ class App extends Component {
             playlist.setSeekStyle(node.target.value);
         });
 
-//track drop
+        //track drop
         $container.on("dragenter", ".track-drop", function (e) {
             e.preventDefault();
             e.target.classList.add("drag-enter");
@@ -290,9 +271,9 @@ class App extends Component {
             e.preventDefault();
             e.target.classList.remove("drag-enter");
 
-            var dropEvent = e.originalEvent;
+            let dropEvent = e.originalEvent;
 
-            for (var i = 0; i < dropEvent.dataTransfer.files.length; i++) {
+            for (let i = 0; i < dropEvent.dataTransfer.files.length; i++) {
                 ee.emit("newtrack", dropEvent.dataTransfer.files[i]);
             }
         });
@@ -326,13 +307,13 @@ class App extends Component {
         }
 
         function displayLoadingData(data) {
-            var info = $("<div/>").append(data);
+            let info = $("<div/>").append(data);
             $(".loading-data").append(info);
         }
 
         function displayDownloadLink(link) {
-            var dateString = (new Date()).toISOString();
-            var $link = $("<a/>", {
+            let dateString = (new Date()).toISOString();
+            let $link = $("<a/>", {
                 'href': link,
                 'download': 'waveformplaylist' + dateString + '.wav',
                 'text': 'Download mix ' + dateString,
@@ -368,10 +349,10 @@ class App extends Component {
         });
 
 
-        var audioStates = ["uninitialized", "loading", "decoding", "finished"];
+        let audioStates = ["uninitialized", "loading", "decoding", "finished"];
 
         ee.on("audiorequeststatechange", function (state, src) {
-            var name = src;
+            let name = src;
 
             if (src instanceof File) {
                 name = src.name;
@@ -381,7 +362,7 @@ class App extends Component {
         });
 
         ee.on("loadprogress", function (percent, src) {
-            var name = src;
+            let name = src;
 
             if (src instanceof File) {
                 name = src.name;

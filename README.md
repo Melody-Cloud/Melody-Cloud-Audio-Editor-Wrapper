@@ -1,3 +1,11 @@
+# Melody Cloud Editor
+
+This is project, which is wrapper for library waveform-playlist (https://www.npmjs.com/package/waveform-playlist) and renders it in React.
+
+It is be hosted separately from main project and displayed inside iframe.
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
